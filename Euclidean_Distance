@@ -1,0 +1,56 @@
+%{001-> test data 003-> training data}%
+
+i=1:20;
+data_001_R2L='data_001_R2L.xls';
+data_001_R2L=xlsread(data_001_R2L);
+width_001=data_001_R2L(:,1);
+width_001(i)=width_001;
+height_001=data_001_R2L(:,2);
+height_001(i)=height_001;
+hough_app_001=data_001_R2L(:,3);
+hough_app_001(i)=hough_app_001;
+wavelet_coe_001=data_001_R2L(:,4);
+wavelet_coe_001(i)=wavelet_coe_001;
+
+data_003_R2L='data_003_R2L.xls';
+data_003_R2L=xlsread(data_003_R2L);
+width_003=data_003_R2L(:,1);
+width_003(i)=width_003;
+height_003=data_003_R2L(:,2);
+height_003(i)=height_003;
+hough_app_003=data_003_R2L(:,3);
+hough_app_003(i)=hough_app_003;
+wavelet_coe_003=data_003_R2L(:,4);
+wavelet_coe_003(i)=wavelet_coe_003;
+
+for i=1:20
+    for j=1:20
+        
+        width_dist(i,j)=sqrt(((width_001(i)-width_003(j)).^2)/(max(width_003)-min(width_003)));
+        
+    end
+end
+
+for i=1:20
+    for j=1:20
+        
+        height_dist(i,j)=sqrt(((hough_app_001(i)-hough_app_003(j)).^2)/(max(hough_app_003)-min(hough_app_003)));
+        
+    end
+end
+
+for i=1:20
+    for j=1:20
+        
+        wavelet_dist(i,j)=sqrt(((wavelet_coe_001(i)-wavelet_coe_003(j)).^2)/(max(wavelet_coe_003)-min(wavelet_coe_003)));
+        
+    end
+end
+
+for i=1:20
+    for j=1:20
+        
+        hough_dist(i,j)=sqrt(((hough_app_001(i)-hough_app_003(j)).^2)/(max(hough_app_003)-min(hough_app_003)));
+        
+    end
+end

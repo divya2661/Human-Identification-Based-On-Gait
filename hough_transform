@@ -1,0 +1,10 @@
+I  = imread('img.jpg');
+%bw=im2bw(I,.5)
+BW = edge(bw,'canny');
+[H,T,R] = hough(BW);
+P  = houghpeaks(H,2);
+disp(P);
+imshow(H,[],'XData',T,'YData',R,'InitialMagnification','fit');
+xlabel('\theta'), ylabel('\rho');
+axis on, axis normal, hold on;
+plot(T(P(:,2)),R(P(:,1)),'s','color','white');

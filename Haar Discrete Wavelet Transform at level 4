@@ -1,0 +1,15 @@
+img=imread('sil.png');
+[c,s]=wavedec2(img,4,'haar');
+ca2=appcoef2(c,s,'haar',4);
+img1=imread('sil1.png');
+[c1,s1]=wavedec2(img1,4,'haar');
+ca1=appcoef2(c1,s1,'haar',4);
+%disp(size(X));
+%disp(c);
+A2 = reshape(ca2',prod(size(ca2)),1);
+disp(s);
+plot(ca2);
+disp(ca2);
+A1 = reshape(ca1',prod(size(ca1)),1);
+dist = sqrt(dot(A2-A1,A2-A1));
+%disp(ca2);

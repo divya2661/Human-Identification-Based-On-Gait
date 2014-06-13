@@ -1,0 +1,102 @@
+%srcFiles = dir('wl\00_1');  % the folder in which ur images exists
+for i=1:37
+    if i<10
+        const_str1 = 'wl-00_1-00';
+        const_str2='.png';
+        num=i;
+        var1_str = num2str(i,1);
+        newstr=strcat(const_str1,var1_str,const_str2);
+        disp(newstr);
+        %celldata(i)=cellstr(newstr);
+        img=imread(newstr);
+        mid_skel= bwmorph(img,'skel',Inf);
+        skeleton = bwmorph(mid_skel,'spur', 7);
+        BW = edge(skeleton,'canny');
+        [H,T,R] = hough(BW);
+        hough_thetha_rho(i,:) = houghpeaks(H,1);
+        L = bwlabel(img);
+        st = regionprops(L,'centroid','area','MajorAxisLength','MinorAxisLength');
+        %disp(st);
+        height=st.MajorAxisLength;
+        width=st.MinorAxisLength;
+        centroid(i,:)=st.Centroid;
+        area(i)=st.Area;
+        [c,s]=wavedec2(img,4,'haar');
+        ca2=appcoef2(c,s,'haar',4);
+        ca2=normc(ca2);
+        A2 = ca2(:);
+        meanca2(i)=mean(A2);
+        mean_ca2=transpose(meanca2) ;
+        h(i,:)=height;
+        w(i)=width;
+        area= transpose(area);
+        w=transpose(w);
+        
+    end
+    if i>=10 & i<100 
+        const_str1 = 'wl-00_1-0';
+        const_str2='.png';
+        num=i;
+        var1_str = num2str(i,2);
+        newstr=strcat(const_str1,var1_str,const_str2);
+        img=imread(newstr);
+        disp(newstr);
+        mid_skel= bwmorph(img,'skel',Inf);
+        skeleton = bwmorph(mid_skel,'spur', 7);
+        BW = edge(skeleton,'canny');
+        [H,T,R] = hough(BW);
+        hough_thetha_rho(i,:)  = houghpeaks(H,1);
+        L = bwlabel(img);
+        st = regionprops(L,'centroid','area','MajorAxisLength','MinorAxisLength');
+        %disp(st);
+        height=st.MajorAxisLength;
+        width=st.MinorAxisLength;
+        centroid(i,:)=st.Centroid;
+        area(i)=st.Area;
+        [c,s]=wavedec2(img,4,'haar');
+        ca2=appcoef2(c,s,'haar',4);
+        ca2=normc(ca2);
+        A2 = ca2(:);
+        meanca2(i)=mean(A2);
+        mean_ca2=transpose(meanca2) ;
+        h(i,:)=height;
+        w(i)=width;
+        area=transpose(area);
+        w=transpose(w);
+    end
+    if i>100 | i==100
+         const_str1 = 'wl-00_1-';
+         const_str2='.png';
+         num=i;
+         var1_str = num2str(i,3);
+         newstr=strcat(const_str1,var1_str,const_str2);
+         disp(newstr);
+         img=imread(newstr);
+         %disp(newstr);
+         mid_skel= bwmorph(img,'skel',Inf);
+         skeleton = bwmorph(mid_skel,'spur', 7);
+         BW = edge(skeleton,'canny');
+         [H,T,R] = hough(BW);
+         hough_thetha_rho(i,:) =houghpeaks(H,1);
+         L = bwlabel(img);
+         st = regionprops(L,'centroid','area','MajorAxisLength','MinorAxisLength');
+         %disp(st);
+         height=st.MajorAxisLength;
+         width=st.MinorAxisLength;
+         centroid(i,:)=st.Centroid;
+         area(i)=st.Area;
+         h(i,:)=height;
+         w(i)=width;
+         area=transpose(area);
+         w=transpose(w);
+         [c,s]=wavedec2(img,4,'haar');
+         ca2=appcoef2(c,s,'haar',4);
+         ca2=normc(ca2);
+         A2 = ca2(:);
+         meanca2(i)=mean(A2);
+         mean_ca2=transpose(meanca2) ;
+    end
+
+end
+%disp(hough_thetha_rho);
+save('wl_00_1_all.mat','-mat','hough_thetha_rho','area','centroid','h','w','mean_ca2');
